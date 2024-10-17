@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pháo Hoa Nổ</title>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            background-color: black;
+        }
+        #message {
+            color: white;
+            font-size: 40px;
+            font-family: 'Pacifico', cursive;
+            text-align: center;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            opacity: 0;
+            transition: opacity 1s ease;
+            z-index: 10; /* Đặt thông điệp lên trên pháo hoa */
+        }
+    </style>
+</head>
+<body>
+
+<div id="message">Em yêu chị Cún Thối của em</div>
+
+<script>
+    function showMessage() {
+        const message = document.getElementById('message');
+        message.style.opacity = 1; // Hiện thông điệp đầu tiên
+        setTimeout(() => {
+            message.style.opacity = 0; // Ẩn thông điệp đầu tiên
+            setTimeout(() => {
+                message.textContent = "Chị cưới em nhé"; // Đổi nội dung tin nhắn
+                message.style.opacity = 1; // Hiện thông điệp thứ hai
+            }, 1000); // Đợi 1 giây trước khi hiện tin nhắn thứ hai
+        }, 5000); // Ẩn tin nhắn đầu sau 5 giây
+    }
+
+    function createFirework() {
+        const firework = document.createElement('div');
+        firework.style.position = 'absolute';
+        firework.style.border = '2px solid'; // Đường viền dày hơn để tạo độ đậm
+        firework.style.borderRadius = '50%';
+        firework.style.pointerEvents = 'none';
+        firework.style.width = '20px'; // Kích thước ban đầu của pháo hoa
+        firework.style.height = '20px'; // Kích thước ban đầu của pháo hoa
+        firework.style.opacity = 0; // Ẩn ban đầu
+        
+        // Tạo vị trí ngẫu nhiên cho pháo hoa
+        firework.style.left = Math.random() * window.innerWidth + 'px';
+        firework.style.top = Math.random() * window.innerHeight + 'px';
+
+        const colors = ['red', 'yellow', 'blue', 'green', 'purple', 'orange'];
+        firework.style.borderColor = colors[Math.floor(Math.random() * colors.length)];
+        
+        // Tạo hình hoa 5 cánh bằng clip-path
+        firework.style.clipPath = 'polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%)';
+        
+        // Tăng hiệu ứng lấp lánh quanh đường kính
+        firework.style.boxShadow = `0 0 15px ${firework.style.borderColor}, 0 0 30px ${firework.style.borderColor}, 0 0 45px ${firework.style.borderColor}`;
+        
+        document.body.appendChild(firework);
+        
+        // Pháo hoa nổ
+        setTimeout(() => {
+            firework.style.opacity = 1; // Hiện rõ khi nổ
+            firework.style.transform = 'scale(6)'; // Tăng kích thước khi nổ
+            firework.style.transition = 'transform 0.5s ease, opacity 0.5s ease'; // Thêm hiệu ứng chuyển đổi
+            
+            // Tăng hiệu ứng lấp lánh
+            firework.style.boxShadow = `0 0 30px ${firework.style.borderColor}, 0 0 60px ${firework.style.borderColor}, 0 0 90px ${firework.style.borderColor}`;
+        }, 100);
+
+        // Xóa pháo hoa sau khi nổ
+        setTimeout(() => {
+            firework.style.opacity = 0; // Biến mất
+        }, 1000); // Giữ lại pháo hoa trong thời gian dài hơn để hiệu ứng đẹp hơn
+
+        setTimeout(() => {
+            firework.remove();
+        }, 1500); // Xóa pháo hoa sau khi biến mất
+    }
+
+    // Nổ pháo hoa liên tục
+    setInterval(createFirework, 300);
+    
+    // Hiện thông điệp
+    showMessage();
+</script>
+
+</body>
+</html>
